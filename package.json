@@ -1,0 +1,23 @@
+{
+  "name": "senior-project",
+  "version": "0.0.0",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:all": "vite build && electron .",
+    "preview": "vite preview",
+    "electron:start": "electron ."
+  },
+  "dependencies": {
+    "pinia": "^2.0.28",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "electron": "^23.1.0",
+    "vite": "^4.0.0"
+  }
+}
