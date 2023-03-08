@@ -1,15 +1,15 @@
-const { app, Menu } = require('electron')
-const createWindow = require('./main').createWindow
-
 const isMac = process.platform === 'darwin'
-
-function buildMenu() {
-    const menu = [
-        // { role: 'appMenu' }
+const createMenuTemplate = (name, mainWin, createWindow) => {
+    return [
         ...(isMac ? [{
-            label: app.name,
+            label: name,
             submenu: [
                 { role: 'about' },
+                {
+                    label: 'Settings',
+                    click: () => { mainWin.webContents.send("nav-settings") },
+                    accelerator: "Cmd+,"
+                },
                 { type: 'separator' },
                 { role: 'services' },
                 { type: 'separator' },
@@ -20,20 +20,25 @@ function buildMenu() {
                 { role: 'quit' }
             ]
         }] : []),
-        // { role: 'fileMenu' }
         {
             label: 'File',
             submenu: [
                 {
                     label: 'Open Library',
-                    click: () => { createWindow(400, 300, null, "dist/index.html") }
+                    click: () => { createWindow(400, 300, mainWin, "dist/index.html") }
                 },
                 isMac ? { role: 'close' } : { role: 'quit' }
             ]
+        },
+        {
+            label: "View",
+            submenu: [
+                { role: "reload" },
+                { role: "forcereload" },
+                { role: "toggledevtools" },
+            ]
         }
     ]
-
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menu))
 }
 
-module.exports = buildMenu
+module.exports = createMenuTemplate

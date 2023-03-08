@@ -1,5 +1,5 @@
 {
-  "name": "senior-project",
+  "name": "alexandria",
   "version": "0.0.0",
   "main": "main.js",
   "private": true,
@@ -8,14 +8,18 @@
     "build": "vite build",
     "build:all": "vite build && electron .",
     "preview": "vite preview",
-    "electron:start": "electron ."
+    "electron:start": "electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "dependencies": {
+    "electron-store": "^8.1.0",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.5",
     "@vitejs/plugin-vue": "^4.0.0",
     "electron": "^23.1.0",
     "vite": "^4.0.0"

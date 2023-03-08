@@ -8,6 +8,16 @@ const router = createRouter({
             path: "/",
             name: "shelf",
             component: ShelfView
+        },
+        {
+            path: "/add",
+            name: "add",
+            component: () => import('../views/AddAssetView.vue')
+        },
+        {
+            path: "/settings",
+            name: "settings",
+            component: () => import('../views/SettingsView.vue')
         }
     ]
 })
