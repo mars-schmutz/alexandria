@@ -1,7 +1,11 @@
 <template>
     <h1>Settings</h1>
+    <label>Library Location:</label>
     <input type="text" v-model="location" />
-    <button @click="saveSettings()">Save</button>
+    <button @click="openPath()">Select Location</button>
+    <button @click="saveSettings()" id="save-btn">Save</button>
+    <button @click="prefPath()">Get My Settings</button>
+    <p>{{ this.prefs }}</p>
 </template>
 
 <script>
@@ -9,16 +13,35 @@ export default {
     name: "Settings",
     data() {
         return {
-            location: ""
+            location: window.store.get("library-location").then((val) => {
+                val ? this.location = val : this.location = ""
+            }),
+            prefs: ""
         }
     },
     methods: {
         saveSettings() {
-            console.log("Saving settings")
-            window.store.get("test").then((val) => {
-                console.log("Got value: " + val)
+            window.store.set("library-location", this.location).then((val) => {})
+        },
+        async openPath() {
+            const path = await window.alexandria.openFile()
+            this.location = path
+        },
+        prefPath() {
+            window.alexandria.getPrefPath().then((val) => {
+                this.prefs = val
+                navigator.clipboard.writeText(val)
             })
         }
     },
 }
 </script>
+
+<style scoped>
+input[type="text"] {
+    width: 100%;
+}
+
+#save-btn {
+}
+</style>
