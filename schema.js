@@ -8,6 +8,9 @@ const schema = {
         "items": {
             "type": "object",
             "properties": {
+                "id": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -27,7 +30,7 @@ const schema = {
                     }
                 }
             },
-            "required": ["name", "asset-type"]
+            "required": ["id", "name", "asset-type"]
         },
         "default": []
     }

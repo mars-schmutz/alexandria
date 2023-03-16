@@ -14,7 +14,7 @@ async function handleFileDialog() {
     properties: ["openDirectory", "createDirectory"],
   });
   if (canceled) {
-    return
+    return store.get("library-location")
   } else {
     return filePaths[0]
   }
