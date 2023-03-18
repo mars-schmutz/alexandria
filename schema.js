@@ -1,3 +1,4 @@
+// TODO: fix schema with definitions
 const schema = {
     "library-location": {
         "type": "string",
@@ -14,13 +15,27 @@ const schema = {
                 "name": {
                     "type": "string"
                 },
-                "asset-type": {
+                "path": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "workflow": {
                     "type": "string"
                 },
                 "assets": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "type": "object",
+                        "properties": {
+                            "attribute": {
+                                "type": "string"
+                            },
+                            "path": {
+                                "type": "string"
+                            }
+                        }
                     }
                 },
                 "tags": {
@@ -30,7 +45,7 @@ const schema = {
                     }
                 }
             },
-            "required": ["id", "name", "asset-type"]
+            "required": ["id", "name", "path", "type"]
         },
         "default": []
     }

@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Menu, ipcMain, dialog } = require("electron")
+const fs = require("fs")
 const Store = require("electron-store")
 const path = require("path")
 // const menu = require("./menu")
@@ -9,15 +10,46 @@ const store = new Store(schema)
 let libraryLocation;
 let mainWin;
 
-async function handleFileDialog() {
+async function handleFileDialog(event, dir) {
+  let props = []
+  if (dir) {
+    props = ["openDirectory", "createDirectory"]
+  } else {
+    props = ["openFile"]
+  }
   const { canceled, filePaths } = await dialog.showOpenDialog({
-    properties: ["openDirectory", "createDirectory"],
+    properties: props
   });
+
   if (canceled) {
     return store.get("library-location")
   } else {
     return filePaths[0]
   }
+}
+
+function createEntry(event, pth) {
+  const full_path = store.get("library-location") + "/" + pth
+  fs.mkdir(full_path, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log("Directory created successfully!")
+      return full_path
+    }
+  })
+}
+
+function copyFile(event, src) {
+  const dest = store.get("library-location") + "/" + path.basename(src)
+  fs.copyFile(src, dest, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log("File copied successfully!")
+      return dest
+    }
+  })
 }
 
 function createWindow(w, h, parent, url) {
@@ -46,6 +78,9 @@ app.whenReady().then(() => {
       mainWin = createWindow(900, 700, null, "dist/index.html")
     }
   })
+
+  ipcMain.handle("create-entry", createEntry)
+  ipcMain.handle("copy-file", copyFile)
 
   ipcMain.handle("store:get", (event, key) => {
     return store.get(key)

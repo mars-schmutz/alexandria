@@ -1,6 +1,6 @@
 <template>
     <h3>New Asset</h3>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent>
         <label>Asset Name:</label>
         <input type="text" v-model="assetName" />
         <label>Asset Type:</label>
@@ -10,52 +10,64 @@
             <option value="render-settings">Render Settings</option>
         </select>
         <template v-if="assetType == 'material'">
-            <label>Material Type:</label>
-            <select v-model="materialType">
-                <option disabled>Select material type</option>
-                <option value="diffuse">Diffuse</option>
-                <option value="normal">Normal</option>
-                <option value="roughness">Roughness</option>
-                <option value="metallic">Metallic</option>
-                <option value="emissive">Emissive</option>
-                <option value="ao">AO</option>
-            </select>
+            <NewMaterial
+            @asset_info="assetInfo = $event"
+            />
         </template>
         <template v-if="assetType == 'render-settings'">
             <label>Render Settings JSON export:</label>
         </template>
-        <button>Save</button>
+        <button @click="onSubmit()">Save</button>
     </form>
 </template>
 
 <script>
+// TODO: Emit asset info as single object from each asset component
+// TODO: COPY assets to entry. DO NOT MOVE.
+import NewMaterial from "../components/NewMaterial.vue"
 export default {
     name: "AddAsset",
+    components: {
+        NewMaterial
+    },
     data() {
         return {
             assetName: "",
-            assetType: ""
+            assetType: "",
+            assetInfo: {},
+            assetLocation: ""
         }
     },
     methods: {
+        fileEntry() {
+            let entry_path = this.assetName.split(" ").join("_")
+            this.assetLocation = window.alexandria.createEntry(entry_path)
+            for (let key in this.assetInfo) {
+                let newurl = window.alexandria.copyFile(this.assetInfo[key])
+                this.assetInfo[key] = newurl
+            }
+        },
         async onSubmit() {
+            // this.fileEntry()
+
             const timestamp = Date.now().toString(36)
             const randNum = Math.random().toString(36)
             const newId = timestamp + randNum
             let currLib = await window.store.get("library-shelves") ? await window.store.get("library-shelves") : []
-            const asset = {
+            let asset = {
                 id: newId,
                 name: this.assetName,
-                type: this.assetType
+                type: this.assetType,
+                path: this.assetLocation,
+                assets: this.assetInfo
             }
             console.log(currLib)
             currLib.push(asset)
             window.store.set("library-shelves", currLib).then((val) => {
-                console.log("Saved asset to library")
+                console.log(JSON.stringify(this.assetInfo))
             })
 
-            this.assetName = ""
-            this.assetType = ""
+            this.$router.push("/")
         }
     }
 }

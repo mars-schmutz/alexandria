@@ -24,7 +24,7 @@ export default {
             window.store.set("library-location", this.location).then((val) => {})
         },
         async openPath() {
-            const path = await window.alexandria.openFile()
+            const path = await window.alexandria.openFile(true)
             this.location = path
         },
         prefPath() {
