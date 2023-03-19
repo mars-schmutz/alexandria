@@ -22,9 +22,6 @@ const schema = {
                         "type": "string"
                     }
                 },
-                "workflow": {
-                    "type": "string"
-                },
                 "maps": {
                     "type": "object",
                     "properties": {

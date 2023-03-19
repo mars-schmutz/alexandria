@@ -9,18 +9,42 @@
             <input type="text" v-model="asset_tags" />
         </div>
         <div>
-            <label>Workflow</label>
-            <select v-model="mat_workflow">
-                <option disabled>Choose a workflow</option>
-                <option value="metallic">Metallic</option>
-                <option value="specular">Specular</option>
-            </select>
-        </div>
-        <div>
             <label>Texture Maps:</label>
-            <label>Diffuse</label>
-            <button @click="getPath('diffuse')">Diffuse</button>
-            <p>{{ asset_info.diffuse }}</p>
+            <div>
+                <label>Diffuse</label>
+                <button @click="getPath('diffuse')">Diffuse</button>
+                <p>{{ asset_info.diffuse }}</p>
+            </div>
+            <div>
+                <label>Metallic</label>
+                <button @click="getPath('metallic')">Metallic</button>
+                <p>{{ asset_info.metallic }}</p>
+            </div>
+            <div>
+                <label>Specular</label>
+                <button @click="getPath('specular')">Specular</button>
+                <p>{{ asset_info.specular }}</p>
+            </div>
+            <div>
+                <label>Roughness</label>
+                <button @click="getPath('roughness')">Roughness</button>
+                <p>{{ asset_info.roughness }}</p>
+            </div>
+            <div>
+                <label>Normal</label>
+                <button @click="getPath('normal')">Normal</button>
+                <p>{{ asset_info.normal }}</p>
+            </div>
+            <div>
+                <label>Bump</label>
+                <button @click="getPath('bump')">Bump</button>
+                <p>{{ asset_info.metallic }}</p>
+            </div>
+            <div>
+                <label>Displacement</label>
+                <button @click="getPath('displacement')">Displacement</button>
+                <p>{{ asset_info.displacement }}</p>
+            </div>
         </div>
         <button @click="onSubmit()">Save</button>
     </form>
@@ -34,6 +58,7 @@ export default {
     },
     data() {
         return {
+            id: "",
             name: "",
             assetLocation: "default_path",
             asset_info: {
@@ -46,7 +71,6 @@ export default {
                 displacement: "",
             },
             asset_tags: "",
-            mat_workflow: "",
         }
     },
     methods: {
@@ -55,29 +79,30 @@ export default {
             this.asset_info[mat_map] = path
         },
         async fileEntry() {
-            let entry_path = this.name.split(" ").join("_")
-            try {
-                this.assetLocation = await window.alexandria.createEntry(entry_path)
-                console.log(`assetLocation: ${this.assetLocation}`)
-            } catch (err) {
-                console.log(err)
+            const timestamp = Date.now()
+            const randString = Math.random().toString(36).substring(2, 8)
+            this.id = `${timestamp}-${randString}`
+            this.assetLocation = await window.alexandria.createEntry(this.id)
+            await this.copyFiles()
+        },
+        async copyFiles() {
+            for (let key in this.asset_info) {
+                if (this.asset_info[key] != "") {
+                    let new_path = await window.alexandria.copyFile(this.asset_info[key], this.assetLocation)
+                    this.asset_info[key] = new_path
+                }
             }
-            console.log(`assetLocation: ${this.assetLocation}`)
         },
         async onSubmit() {
             await this.fileEntry()
 
-            const timestamp = Date.now().toString(36)
-            const randNum = Math.random().toString(36)
-            const newId = timestamp + randNum
             let currLib = await window.store.get("library-shelves") ? await window.store.get("library-shelves") : []
             let mat = {
-                id: newId,
+                id: this.id,
                 name: this.name,
-                path: "default_path",
+                path: this.assetLocation,
                 type: this.type,
                 tags: this.asset_tags,
-                workflow: this.mat_workflow,
                 maps: {
                     diffuse: this.asset_info.diffuse,
                     metallic: this.asset_info.metallic,
@@ -90,9 +115,7 @@ export default {
             }
 
             currLib.push(mat)
-            console.log(`currLib: ${JSON.stringify(currLib)}`)
             window.store.set("library-shelves", currLib).then((val) => {
-                console.log(`val: ${val}`)
             }).catch((err) => {
                 console.log("error pushing to library-shelves")
                 console.log(err)

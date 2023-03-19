@@ -3,7 +3,7 @@ const { contextBridge, ipcRenderer } = require('electron')
 contextBridge.exposeInMainWorld("alexandria", {
     // addAsset: () => ipcRenderer.send("add-asset"), dont need?
     createEntry: (pth) => ipcRenderer.invoke("create-entry", pth),
-    copyFile: (src) => ipcRenderer.invoke("copy-file", src),
+    copyFile: (src, dest) => ipcRenderer.invoke("copy-file", src, dest),
     openFile: (dir) => ipcRenderer.invoke("dialog:open-file", dir),
 
     getSettingsPage: (callback) => ipcRenderer.on("nav-settings", callback),

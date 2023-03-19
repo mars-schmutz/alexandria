@@ -1,5 +1,5 @@
 const { app, BrowserWindow, Menu, ipcMain, dialog } = require("electron")
-const fs = require("fs")
+const fs = require("fs").promises
 const Store = require("electron-store")
 const path = require("path")
 // const menu = require("./menu")
@@ -30,26 +30,22 @@ async function handleFileDialog(event, dir) {
 
 async function createEntry(event, pth) {
   const full_path = store.get("library-location") + "/" + pth
-  fs.mkdir(full_path, (err) => {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log(`Directory created successfully at ${full_path}`)
-      return full_path
-    }
-  })
+  try {
+    await fs.mkdir(full_path)
+    return full_path
+  } catch (err) {
+    console.log(err)
+  }
 }
 
-async function copyFile(event, src) {
-  const dest = store.get("library-location") + "/" + path.basename(src)
-  fs.copyFile(src, dest, (err) => {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log("File copied successfully!")
-      return dest
-    }
-  })
+async function copyFile(event, src, dest) {
+  const full_dest = path.join(dest, path.basename(src))
+  try {
+    await fs.copyFile(src, full_dest)
+    return full_dest
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 function createWindow(w, h, parent, url) {
