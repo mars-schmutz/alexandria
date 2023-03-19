@@ -1,12 +1,7 @@
 // TODO: fix schema with definitions
 const schema = {
-    "library-location": {
-        "type": "string",
-        "default": ""
-    },
-    "library-shelves": {
-        "type": "array",
-        "items": {
+    "definitions": {
+        "material": {
             "type": "object",
             "properties": {
                 "id": {
@@ -21,31 +16,55 @@ const schema = {
                 "type": {
                     "type": "string"
                 },
-                "workflow": {
-                    "type": "string"
-                },
-                "assets": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "attribute": {
-                                "type": "string"
-                            },
-                            "path": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
                 "tags": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
+                },
+                "workflow": {
+                    "type": "string"
+                },
+                "maps": {
+                    "type": "object",
+                    "properties": {
+                        "diffuse": {
+                            "type": "string"
+                        },
+                        "metallic": {
+                            "type": "string"
+                        },
+                        "specular": {
+                            "type": "string"
+                        },
+                        "roughness": {
+                            "type": "string"
+                        },
+                        "normal": {
+                            "type": "string"
+                        },
+                        "bump": {
+                            "type": "string"
+                        },
+                        "displacement": {
+                            "type": "string"
+                        },
+                    }
                 }
-            },
-            "required": ["id", "name", "path", "type"]
+            }
+        },
+        "required": ["name", "id"]
+    },
+    "library-location": {
+        "type": "string",
+        "default": ""
+    },
+    "library-shelves": {
+        "type": "array",
+        "items": {
+            "anyOf": [
+                { "$ref": "#/definitions/material" },
+            ]
         },
         "default": []
     }

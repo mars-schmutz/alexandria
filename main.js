@@ -28,19 +28,19 @@ async function handleFileDialog(event, dir) {
   }
 }
 
-function createEntry(event, pth) {
+async function createEntry(event, pth) {
   const full_path = store.get("library-location") + "/" + pth
   fs.mkdir(full_path, (err) => {
     if (err) {
       console.log(err)
     } else {
-      console.log("Directory created successfully!")
+      console.log(`Directory created successfully at ${full_path}`)
       return full_path
     }
   })
 }
 
-function copyFile(event, src) {
+async function copyFile(event, src) {
   const dest = store.get("library-location") + "/" + path.basename(src)
   fs.copyFile(src, dest, (err) => {
     if (err) {
