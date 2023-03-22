@@ -48,6 +48,14 @@ async function copyFile(event, src, dest) {
   }
 }
 
+async function deleteEntry(event, pth) {
+  try {
+    await fs.rm(pth, { recursive: true })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 function createWindow(w, h, parent, url) {
   const win = new BrowserWindow({
     width: w,
@@ -77,6 +85,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle("create-entry", createEntry)
   ipcMain.handle("copy-file", copyFile)
+  ipcMain.handle("delete-entry", deleteEntry)
 
   ipcMain.handle("store:get", (event, key) => {
     return store.get(key)

@@ -5,6 +5,7 @@ contextBridge.exposeInMainWorld("alexandria", {
     createEntry: (pth) => ipcRenderer.invoke("create-entry", pth),
     copyFile: (src, dest) => ipcRenderer.invoke("copy-file", src, dest),
     openFile: (dir) => ipcRenderer.invoke("dialog:open-file", dir),
+    deleteEntry: (pth) => ipcRenderer.invoke("delete-entry", pth),
 
     getSettingsPage: (callback) => ipcRenderer.on("nav-settings", callback),
     getPrefPath: (value) => ipcRenderer.invoke("get-prefs", value),

@@ -114,6 +114,8 @@ export default {
                 }
             }
 
+            console.log(`type of currLib: ${typeof currLib}`)
+            console.log(currLib)
             currLib.push(mat)
             window.store.set("library-shelves", currLib).then((val) => {
             }).catch((err) => {

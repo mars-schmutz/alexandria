@@ -1,12 +1,19 @@
 <template>
     <p v-if="assets.length == 0">No assets in library</p>
     <div v-else>
-        <Asset v-for="asset in assets" :key="asset.id" :name="asset.name" :data-id="asset.id" @click="view(asset.id)"/>
+        <Asset v-for="asset in assets"
+        :key="asset.id" 
+        :name="asset.name" 
+        :data-id="asset.id" 
+        @delete="deleteAsset(asset.id)"
+        @view="view(asset.id)"/>
     </div>
 </template>
 
 <script>
 import Asset from "../components/Asset.vue"
+// necessary to convert reactive object to raw object
+import { toRaw } from "vue"
 
 export default {
     name: "ShelfView",
@@ -23,6 +30,22 @@ export default {
     methods: {
         view(id) {
             this.$router.push(`/details/${id}`)
+        },
+        deleteAsset(id) {
+            let asset = this.assets.find(asset => asset.id == id)
+            let asset_entry = asset.path
+            window.alexandria.deleteEntry(asset_entry).then(() => {
+                console.log("File deleted")
+                let i = this.assets.findIndex(asset => asset.id == id)
+                this.assets.splice(i, 1)
+                window.store.set("library-shelves", toRaw(this.assets)).then(() => {
+                    console.log("Asset removed from library")
+                }).catch((err) => {
+                    console.log(err)
+                })
+            }).catch((err) => {
+                console.log(err)
+            })
         }
     },
     mounted() {

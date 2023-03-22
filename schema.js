@@ -10,6 +10,9 @@ const schema = {
                 "name": {
                     "type": "string"
                 },
+                "thumbnail": {
+                    "type": "string"
+                },
                 "path": {
                     "type": "string"
                 },
