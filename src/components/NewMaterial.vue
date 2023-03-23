@@ -9,7 +9,12 @@
             <input type="text" v-model="asset_tags" />
         </div>
         <div>
-            <label>Texture Maps:</label>
+            <label>Thumbnail:</label>
+            <button @click="getPath('thumbnail')">Thumbnail</button>
+            <p>{{ asset_info.thumbnail }}</p>
+        </div>
+        <div>
+            <h3>Texture Maps:</h3>
             <div>
                 <label>Diffuse</label>
                 <button @click="getPath('diffuse')">Diffuse</button>
@@ -62,6 +67,7 @@ export default {
             name: "",
             assetLocation: "default_path",
             asset_info: {
+                thumbnail: "",
                 diffuse: "",
                 metallic: "",
                 specular: "",
@@ -100,6 +106,7 @@ export default {
             let mat = {
                 id: this.id,
                 name: this.name,
+                thumbnail: this.asset_info.thumbnail,
                 path: this.assetLocation,
                 type: this.type,
                 tags: this.asset_tags,
@@ -114,14 +121,13 @@ export default {
                 }
             }
 
-            console.log(`type of currLib: ${typeof currLib}`)
-            console.log(currLib)
             currLib.push(mat)
-            window.store.set("library-shelves", currLib).then((val) => {
-            }).catch((err) => {
+            try {
+                await window.store.set("library-shelves", currLib)
+            } catch (err) {
                 console.log("error pushing to library-shelves")
                 console.log(err)
-            })
+            }
 
             this.$router.push("/")
         }

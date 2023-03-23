@@ -1,4 +1,3 @@
-// TODO: fix schema with definitions
 const schema = {
     "definitions": {
         "material": {

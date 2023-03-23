@@ -4,6 +4,8 @@
         <template v-if="asset">
             <p>{{ asset.name }}</p>
             <p>{{ asset.id }}</p>
+            <button @click="editEntry()">Edit</button>
+            <button @click="retrieveEntry()">View on disk</button>
         </template>
         <template v-else>
             <p>Loading...</p>
@@ -17,13 +19,24 @@ export default {
     data() {
         return {
             id: this.$route.params.id,
-            asset: null
+            asset: null,
+        }
+    },
+    methods: {
+        async retrieveEntry() {
+            try {
+                await window.alexandria.openEntry(this.asset.path)
+            } catch (err) {
+                console.log(err)
+            }
+        },
+        editEntry() {
+            this.$router.push(`/edit/${this.asset.id}`)
         }
     },
     created() {
         window.store.get("library-shelves").then((val) => {
             let i = val.findIndex(asset => asset.id == this.id)
-            console.log(val[i])
             this.asset = val[i]
         })
     }

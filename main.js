@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain, dialog } = require("electron")
+const { app, BrowserWindow, Menu, ipcMain, dialog, shell } = require("electron")
 const fs = require("fs").promises
 const Store = require("electron-store")
 const path = require("path")
@@ -9,6 +9,8 @@ const menuTemplate = require("./menu2")
 const store = new Store(schema)
 let libraryLocation;
 let mainWin;
+
+// TODO: handle file selection cancel
 
 async function handleFileDialog(event, dir) {
   let props = []
@@ -29,7 +31,8 @@ async function handleFileDialog(event, dir) {
 }
 
 async function createEntry(event, pth) {
-  const full_path = store.get("library-location") + "/" + pth
+  // const full_path = store.get("library-location") + "/" + pth
+  const full_path = path.join(libraryLocation, pth)
   try {
     await fs.mkdir(full_path)
     return full_path
@@ -51,6 +54,14 @@ async function copyFile(event, src, dest) {
 async function deleteEntry(event, pth) {
   try {
     await fs.rm(pth, { recursive: true })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function openEntry(event, path) {
+  try {
+    await shell.openPath(path)
   } catch (err) {
     console.log(err)
   }
@@ -86,6 +97,7 @@ app.whenReady().then(() => {
   ipcMain.handle("create-entry", createEntry)
   ipcMain.handle("copy-file", copyFile)
   ipcMain.handle("delete-entry", deleteEntry)
+  ipcMain.handle("open-entry", openEntry)
 
   ipcMain.handle("store:get", (event, key) => {
     return store.get(key)

@@ -1,9 +1,11 @@
 <template>
     <p v-if="assets.length == 0">No assets in library</p>
     <div v-else>
+        <!-- :data-id? -->
         <Asset v-for="asset in assets"
         :key="asset.id" 
         :name="asset.name" 
+        :thumbnail="asset.thumbnail"
         :data-id="asset.id" 
         @delete="deleteAsset(asset.id)"
         @view="view(asset.id)"/>
@@ -47,8 +49,6 @@ export default {
                 console.log(err)
             })
         }
-    },
-    mounted() {
     }
 }
 </script>
