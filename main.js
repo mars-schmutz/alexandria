@@ -10,8 +10,6 @@ const store = new Store(schema)
 let libraryLocation;
 let mainWin;
 
-// TODO: handle file selection cancel
-
 async function handleFileDialog(event, dir) {
   let props = []
   if (dir) {
@@ -24,7 +22,8 @@ async function handleFileDialog(event, dir) {
   });
 
   if (canceled) {
-    return store.get("library-location")
+    // return store.get("library-location")
+    return ""
   } else {
     return filePaths[0]
   }

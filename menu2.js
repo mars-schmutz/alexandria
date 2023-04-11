@@ -27,6 +27,10 @@ const createMenuTemplate = (name, mainWin, createWindow) => {
                     label: 'Open Library',
                     click: () => { createWindow(400, 300, mainWin, "dist/index.html") }
                 },
+                {
+                    label: "Settings",
+                    click: () => { mainWin.webContents.send("nav-settings") },
+                },
                 isMac ? { role: 'close' } : { role: 'quit' }
             ]
         },

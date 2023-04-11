@@ -1,8 +1,27 @@
 {
   "name": "alexandria",
   "version": "0.0.0",
+  "author": "Mersh",
+  "description": "A 3D asset manager for Blender",
   "main": "main.js",
   "private": true,
+  "config": {
+    "forge": {
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "certificateFile": "./cert.pfx",
+            "certificatePassword": "process.env.CERTIFICATE_PASSWORD"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-dmg",
+          "config": {}
+        }
+      ]
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -10,9 +29,12 @@
     "preview": "vite preview",
     "electron:start": "electron .",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "make:win": "electron-forge make --platform=win32"
   },
   "dependencies": {
+    "@electron-forge/maker-dmg": "^6.1.0",
+    "@electron-forge/maker-squirrel": "^6.1.0",
     "electron-store": "^8.1.0",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",

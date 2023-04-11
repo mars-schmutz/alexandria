@@ -1,6 +1,6 @@
 <template>
     <p v-if="assets.length == 0">No assets in library</p>
-    <div v-else>
+    <div class="shelf" v-else>
         <!-- :data-id? -->
         <Asset v-for="asset in assets"
         :key="asset.id" 
@@ -34,6 +34,9 @@ export default {
             this.$router.push(`/details/${id}`)
         },
         deleteAsset(id) {
+            if (confirm("Are you sure you want to delete this asset?") == false) {
+                return
+            }
             let asset = this.assets.find(asset => asset.id == id)
             let asset_entry = asset.path
             window.alexandria.deleteEntry(asset_entry).then(() => {
@@ -52,3 +55,14 @@ export default {
     }
 }
 </script>
+
+<style>
+.shelf {
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    margin-top: 2rem;
+}
+</style>
