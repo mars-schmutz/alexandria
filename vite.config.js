@@ -10,7 +10,8 @@ export default defineConfig({
   base: path.resolve(__dirname, "./dist/"),
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      // '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': path.resolve(__dirname, "./src")
     }
   }
 })

@@ -109,7 +109,8 @@ app.whenReady().then(() => {
   ipcMain.handle("dialog:open-file", handleFileDialog)
   // ipcMain.handle("get-prefs", getPrefsPath)
   ipcMain.handle("get-prefs", () => {
-    return app.getPath("userData")
+    let full_settings = path.join(app.getPath("userData"), "config.json")
+    return full_settings
   })
 })
 

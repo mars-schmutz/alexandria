@@ -5,12 +5,8 @@
             <input type="text" v-model="name" />
         </div>
         <div>
-            <label>Tags:</label>
-            <input type="text" v-model="asset_tags" />
-        </div>
-        <div>
-            <label>Settings File:</label>
-            <button @click="getPath('settings')">Settings</button>
+            <label>Procedural Material:</label>
+            <button @click="getSettings()">File</button>
             <p>{{ settings }}</p>
         </div>
         <button @click="onSubmit()">Save</button>
@@ -19,7 +15,7 @@
 
 <script>
 export default {
-    name: "NewRender",
+    name: "NewProcMat",
     props: {
         type: String,
     },
@@ -33,10 +29,10 @@ export default {
         }
     },
     methods: {
-        async getPath(map) {
+        async getSettings() {
             let path = await window.alexandria.openFile()
             if (path == "") { return }
-            this[map] = path
+            this.settings = path
         },
         async fileEntry() {
             const timestamp = Date.now()
@@ -48,7 +44,7 @@ export default {
         },
         async onSubmit() {
             await this.fileEntry()
-            let render = {
+            let mat = {
                 id: this.id,
                 name: this.name,
                 settings: this.settings,
@@ -56,7 +52,7 @@ export default {
                 thumbnail: this.thumbnail,
                 type: this.type
             }
-            this.$emit("save", render)
+            this.$emit("save", mat)
         }
     }
 }

@@ -5,10 +5,6 @@
             <input type="text" v-model="name" />
         </div>
         <div>
-            <label>Tags:</label>
-            <input type="text" v-model="asset_tags" />
-        </div>
-        <div>
             <label>Thumbnail:</label>
             <button @click="getPath('thumbnail')">Thumbnail</button>
             <p>{{ asset_info.thumbnail }}</p>
@@ -76,12 +72,12 @@ export default {
                 bump: "",
                 displacement: "",
             },
-            asset_tags: "",
         }
     },
     methods: {
         async getPath(mat_map) {
             const path = await window.alexandria.openFile()
+            if (path == "") { return }
             this.asset_info[mat_map] = path
         },
         async fileEntry() {
@@ -109,7 +105,6 @@ export default {
                 thumbnail: this.asset_info.thumbnail,
                 path: this.assetLocation,
                 type: this.type,
-                tags: this.asset_tags,
                 maps: {
                     diffuse: this.asset_info.diffuse,
                     metallic: this.asset_info.metallic,

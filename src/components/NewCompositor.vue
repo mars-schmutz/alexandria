@@ -5,13 +5,9 @@
             <input type="text" v-model="name" />
         </div>
         <div>
-            <label>Tags:</label>
-            <input type="text" v-model="asset_tags" />
-        </div>
-        <div>
-            <label>Settings File:</label>
-            <button @click="getPath('settings')">Settings</button>
-            <p>{{ settings }}</p>
+            <label>Compositor Settings:</label>
+            <button @click="getSettings()">File</button>
+            <p>{{ fname }}</p>
         </div>
         <button @click="onSubmit()">Save</button>
     </form>
@@ -19,7 +15,7 @@
 
 <script>
 export default {
-    name: "NewRender",
+    name: "NewCompositor",
     props: {
         type: String,
     },
@@ -32,11 +28,20 @@ export default {
             thumbnail: "",
         }
     },
+    computed: {
+        fname: function() {
+            if (this.settings == "") {
+                return "No file selected"
+            } else {
+                return this.settings.split("/").pop()
+            }
+        }
+    },
     methods: {
-        async getPath(map) {
+        async getSettings() {
             let path = await window.alexandria.openFile()
             if (path == "") { return }
-            this[map] = path
+            this.settings = path
         },
         async fileEntry() {
             const timestamp = Date.now()
@@ -48,7 +53,7 @@ export default {
         },
         async onSubmit() {
             await this.fileEntry()
-            let render = {
+            let asset = {
                 id: this.id,
                 name: this.name,
                 settings: this.settings,
@@ -56,7 +61,7 @@ export default {
                 thumbnail: this.thumbnail,
                 type: this.type
             }
-            this.$emit("save", render)
+            this.$emit("save", asset)
         }
     }
 }

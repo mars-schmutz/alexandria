@@ -6,6 +6,9 @@
     <button @click="saveSettings()" id="save-btn">Save</button>
     <button @click="prefPath()">Get My Settings</button>
     <p>{{ this.prefs }}</p>
+    <div class="attributions">
+        <p>https://www.flaticon.com/free-icons/photography - Photography icons created by Freepik - Flaticon</p>
+    </div>
 </template>
 
 <script>

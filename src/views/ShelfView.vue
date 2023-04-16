@@ -1,15 +1,19 @@
 <template>
     <p v-if="assets.length == 0">No assets in library</p>
-    <div class="shelf" v-else>
-        <!-- :data-id? -->
-        <Asset v-for="asset in assets"
-        :key="asset.id" 
-        :name="asset.name" 
-        :thumbnail="asset.thumbnail"
-        :data-id="asset.id" 
-        @delete="deleteAsset(asset.id)"
-        @view="view(asset.id)"/>
-    </div>
+    <template v-else>
+        <input type="text" v-model="search" placeholder="Search">
+        <div class="shelf">
+            <!-- :data-id? -->
+            <Asset v-for="asset in filtered"
+            :key="asset.id" 
+            :name="asset.name" 
+            :thumbnail="asset.thumbnail"
+            :assetType="asset.type"
+            :data-id="asset.id" 
+            @delete="deleteAsset(asset.id)"
+            @view="view(asset.id)"/>
+        </div>
+    </template>
 </template>
 
 <script>
@@ -24,9 +28,8 @@ export default {
     },
     data() {
         return {
-            assets: window.store.get("library-shelves").then((val) => {
-                val ? this.assets = val : this.assets = []
-            })
+            assets: "",
+            search: ""
         }
     },
     methods: {
@@ -52,17 +55,38 @@ export default {
                 console.log(err)
             })
         }
+    },
+    computed: {
+        filtered: function() {
+            console.log(this.assets)
+            return this.assets.filter((asset) => {
+                return asset.name.toLowerCase().includes(this.search.toLowerCase())
+            })
+        }
+    },
+    created() {
+        window.store.get("library-shelves").then((val) => {
+            val ? this.assets = val : this.assets = []
+        })
     }
 }
 </script>
 
-<style>
+<style scoped>
+input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+    margin-top: 2rem;
+}
+
 .shelf {
     overflow: auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-content: flex-start;
-    margin-top: 2rem;
 }
 </style>

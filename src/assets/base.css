@@ -14,7 +14,7 @@
     --color-bg: var(--white);
     --color: var(--dark-grey);
     --color-border: var(--dark-grey);
-    --color-hightlight: var(--white-highlight);
+    --color-highlight: var(--white-highlight);
     --btn-color: var(--indigo);
     --btn-border: var(--indigo);
 }
@@ -24,7 +24,7 @@
         --color-bg: var(--dark-grey);
         --color: var(--white);
         --color-border: var(--white);
-        --color-hightlight: var(--dark-highlight);
+        --color-highlight: var(--dark-highlight);
         --btn-border: var(--vue-green);
         --btn-color: var(--vue-green);
     }

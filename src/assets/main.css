@@ -1,4 +1,4 @@
-@import './base.css';
+@import "./base.css";
 
 #app {
     margin: 0 auto;
@@ -15,7 +15,7 @@ nav a {
 }
 
 nav a:not(:first-child) {
-    background-color: var(--color-highlight);
+    /* background-color: var(--color-highlight); */
 }
 
 #addNew {

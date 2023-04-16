@@ -18,12 +18,6 @@ const schema = {
                 "type": {
                     "type": "string"
                 },
-                "tags": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
                 "maps": {
                     "type": "object",
                     "properties": {
@@ -52,6 +46,75 @@ const schema = {
                 }
             }
         },
+        "render": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": "string"
+                }
+            }
+        },
+        "proc_mat": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": "string"
+                }
+            }
+        },
+        "compositor": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": "string"
+                }
+            }
+        },
         "required": ["name", "id"]
     },
     "library-location": {
@@ -63,6 +126,9 @@ const schema = {
         "items": {
             "anyOf": [
                 { "$ref": "#/definitions/material" },
+                { "$ref": "#/definitions/render" },
+                { "$ref": "#/definitions/proc_mat" },
+                { "$ref": "#/definitions/compositor" }
             ]
         },
         "default": []
