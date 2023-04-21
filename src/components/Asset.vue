@@ -1,18 +1,17 @@
 <template>
-    <div class="asset">
-        <span class="delete" @click="$emit('delete')">&#10006;</span>
-        <div @click="$emit('view')">
-            <h4>{{ name }}</h4>
+    <div class="asset" @click="$emit('view')">
+        <span class="delete" @click.stop="$emit('delete')">&#10006;</span>
+        <div class="info">
+            <p>{{ name }}</p>
             <template v-if="thumbnail != ''">
                 <div class="thumbnail" :style="{ backgroundImage: `url('${thumbnail}')` }"></div>
             </template>
             <template v-else>
                 <!-- <img class="icon" :src="icon" /> -->
                 <svg class="icon">
-                    <use :xlink:href="`${icon}#render`" />
+                    <use :xlink:href="`${icon}#icon`" />
                 </svg>
             </template>
-            <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
         </div>
     </div>
 </template>
@@ -37,10 +36,11 @@ export default {
             } else if (this.assetType == "render-settings") {
                 import("@/assets/render.svg").then((icon) => {
                     this.icon = icon.default
-                    console.log("set icon")
                 })
-            } else {
-                console.log(this.assetType)
+            } else if (this.assetType == "lights") {
+                import("@/assets/lightbulb.svg").then((icon) => {
+                    this.icon = icon.default
+                })
             }
         }
     }
@@ -57,10 +57,21 @@ export default {
     align-items: center;
     justify-content: space-around;
     width: 9rem;
-    height: 9rem;
+    height: 10rem;
     padding-bottom: 0.75rem;
-    border: 1px solid #ccc;
+    border-radius: 0.5rem;
     position: relative;
+    margin: 0.5rem;
+
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.25),
+        -2px -2px 15px 0 rgba(0, 0, 0, 0.25);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0.6rem;
 }
 
 .delete {
@@ -68,14 +79,17 @@ export default {
     position: absolute;
     top: 10px;
     right: 10px;
+    margin-bottom: 0.25rem;
 }
 
 .thumbnail {
+    margin-top: 0.5rem;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     width: 6rem;
     height: 6rem;
+    border-radius: 0.5rem;
 }
 
 .icon {
@@ -85,6 +99,11 @@ export default {
 }
 
 @media (prefers-color-scheme: dark) {
+    .asset {
+        background-color: var(--cards);
+        box-shadow: unset;
+    }
+
     .icon {
         fill: var(--color-highlight);
     }

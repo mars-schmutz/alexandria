@@ -11,6 +11,7 @@
             <option value="render-settings">Render Settings</option>
             <option value="proc-mat">Procedural Material</option>
             <option value="compositor">Compositor Settings</option>
+            <option value="lights">Light Rig</option>
         </select>
         <template v-if="assetType == 'material'">
             <NewMaterial
@@ -35,6 +36,12 @@
             @save="saveAsset"
             />
         </template>
+        <template v-if="assetType == 'lights'">
+            <NewLights
+            :type="assetType"
+            @save="saveAsset"
+            />
+        </template>
     </template>
 </template>
 
@@ -43,13 +50,15 @@ import NewMaterial from "../components/NewMaterial.vue"
 import NewRender from "../components/NewRender.vue"
 import NewProcMat from "../components/NewProcMat.vue"
 import NewCompositor from "../components/NewCompositor.vue"
+import NewLights from "../components/NewLights.vue"
 export default {
     name: "AddAsset",
     components: {
         NewMaterial,
         NewRender,
         NewProcMat,
-        NewCompositor
+        NewCompositor,
+        NewLights
     },
     data() {
         return {

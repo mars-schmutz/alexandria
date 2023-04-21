@@ -7,7 +7,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <!-- <button class="btn btn-primary" @click="addAsset()">New +</button> -->
         <nav>
             <RouterLink to="/add" class="" id="addNew">New +</RouterLink>
-            <RouterLink to="/">Shelves</RouterLink>
+            <RouterLink to="/">Shelf</RouterLink>
         </nav>
     </header>
     <RouterView />

@@ -1,13 +1,13 @@
 <template>
     <form @submit.prevent>
-        <h1>Edit Render Preset</h1>
+        <h1>Edit Light Rig</h1>
         <div>
             <label>Name:</label>
             <input type="text" v-model="new_name" @keydown.enter.prevent/>
         </div>
         <div>
-            <label>Settings File:</label>
-            <button @click="getPath()">Settings</button>
+            <label>Rig File:</label>
+            <button @click="getPath()">Rig</button>
             <p>{{ settings }}</p>
         </div>
         <button @click="onSubmit()">Update</button>
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    name: "EditRender",
+    name: "EditLights",
     props: {
         asset: Object,
         required: true

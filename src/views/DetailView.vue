@@ -25,6 +25,7 @@ export default {
     methods: {
         async retrieveEntry() {
             try {
+                console.log(`Opening ${this.asset.path}...`)
                 await window.alexandria.openEntry(this.asset.path)
             } catch (err) {
                 console.log(err)

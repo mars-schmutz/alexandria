@@ -3,11 +3,7 @@
         <h1>Edit Material</h1>
         <div>
             <label>Name:</label>
-            <input type="text" v-model="new_name" />
-        </div>
-        <div>
-            <label>Tags:</label>
-            <input type="text" v-model="new_tags" />
+            <input type="text" v-model="new_name" @keydown.enter.prevent/>
         </div>
         <div>
             <label>Thumbnail:</label>
@@ -69,7 +65,6 @@ export default {
         return {
             id: this.$route.params.id,
             new_name: this.asset.name,
-            new_tags: this.asset.tags,
             info: {
                 thumbnail: this.asset.thumbnail,
                 diffuse: this.asset.maps.diffuse,

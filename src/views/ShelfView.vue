@@ -1,7 +1,16 @@
 <template>
     <p v-if="assets.length == 0">No assets in library</p>
     <template v-else>
-        <input type="text" v-model="search" placeholder="Search">
+        <div class="sort">
+            <select v-model="viewType">
+                <option value="all">All</option>
+                <option value="materials">Materials</option>
+                <option value="render-settings">Render Settings</option>
+                <option value="compositor">Compositor Settings</option>
+                <option value="lights">Lights</option>
+            </select>
+            <input type="text" v-model="search" placeholder="Search">
+        </div>
         <div class="shelf">
             <!-- :data-id? -->
             <Asset v-for="asset in filtered"
@@ -29,7 +38,8 @@ export default {
     data() {
         return {
             assets: "",
-            search: ""
+            search: "",
+            viewType: "all"
         }
     },
     methods: {
@@ -43,7 +53,6 @@ export default {
             let asset = this.assets.find(asset => asset.id == id)
             let asset_entry = asset.path
             window.alexandria.deleteEntry(asset_entry).then(() => {
-                console.log("File deleted")
                 let i = this.assets.findIndex(asset => asset.id == id)
                 this.assets.splice(i, 1)
                 window.store.set("library-shelves", toRaw(this.assets)).then(() => {
@@ -73,13 +82,32 @@ export default {
 </script>
 
 <style scoped>
+.sort {
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
 input[type="text"] {
-    width: 100%;
+    width: 90%;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
-    margin-bottom: 0.5rem;
-    margin-top: 2rem;
+    margin-left: 0.5rem;
+    background-color: var(--color-bg);
+    color: var(--btn-color);
+}
+
+input[type="text"]:focus, select:focus {
+    outline: none;
+    border: 1px solid var(--btn-color);
+}
+
+select {
+    background-color: var(--color-bg);
+    border-radius: 0.25rem;
+    color: var(--btn-color);
 }
 
 .shelf {

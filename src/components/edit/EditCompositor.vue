@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent>
-        <h1>Edit Render Preset</h1>
+        <h1>Edit Compositor Preset</h1>
         <div>
             <label>Name:</label>
             <input type="text" v-model="new_name" @keydown.enter.prevent/>
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    name: "EditRender",
+    name: "EditCompositor",
     props: {
         asset: Object,
         required: true

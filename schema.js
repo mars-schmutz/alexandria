@@ -115,6 +115,29 @@ const schema = {
                 }
             }
         },
+        "lights": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": "string"
+                }
+            }
+        },
         "required": ["name", "id"]
     },
     "library-location": {
@@ -128,7 +151,8 @@ const schema = {
                 { "$ref": "#/definitions/material" },
                 { "$ref": "#/definitions/render" },
                 { "$ref": "#/definitions/proc_mat" },
-                { "$ref": "#/definitions/compositor" }
+                { "$ref": "#/definitions/compositor" },
+                { "$ref": "#/definitions/lights" }
             ]
         },
         "default": []

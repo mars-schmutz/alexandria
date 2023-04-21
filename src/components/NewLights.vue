@@ -5,8 +5,8 @@
             <input type="text" v-model="name" />
         </div>
         <div>
-            <label>Settings File:</label>
-            <button @click="getPath('settings')">Settings</button>
+            <label>Rig File:</label>
+            <button @click="getPath('settings')">Rig</button>
             <p>{{ settings }}</p>
         </div>
         <button @click="onSubmit()">Save</button>
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    name: "NewRender",
+    name: "NewLights",
     props: {
         type: String,
     },
@@ -44,7 +44,7 @@ export default {
         },
         async onSubmit() {
             await this.fileEntry()
-            let render = {
+            let lights = {
                 id: this.id,
                 name: this.name,
                 settings: this.settings,
@@ -52,7 +52,7 @@ export default {
                 thumbnail: this.thumbnail,
                 type: this.type
             }
-            this.$emit("save", render)
+            this.$emit("save", lights)
         }
     }
 }
