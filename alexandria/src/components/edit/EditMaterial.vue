@@ -8,44 +8,44 @@
         <div>
             <label>Thumbnail:</label>
             <button @click="getPath('thumbnail')">Thumbnail</button>
-            <p>{{ info.thumbnail }}</p>
+            <p>{{ info.thumbnail.split("/").pop() }}</p>
         </div>
         <div>
             <h3>Texture Maps:</h3>
             <div>
                 <label>Diffuse</label>
                 <button @click="getPath('diffuse')">Diffuse</button>
-                <p>{{ info.diffuse }}</p>
+                <p>{{ info.diffuse.split("/").pop() }}</p>
             </div>
             <div>
                 <label>Metallic</label>
                 <button @click="getPath('metallic')">Metallic</button>
-                <p>{{ info.metallic }}</p>
+                <p>{{ info.metallic.split("/").pop() }}</p>
             </div>
             <div>
                 <label>Specular</label>
                 <button @click="getPath('specular')">Specular</button>
-                <p>{{ info.specular }}</p>
+                <p>{{ info.specular.split("/").pop() }}</p>
             </div>
             <div>
                 <label>Roughness</label>
                 <button @click="getPath('roughness')">Roughness</button>
-                <p>{{ info.roughness }}</p>
+                <p>{{ info.roughness.split("/").pop() }}</p>
             </div>
             <div>
                 <label>Normal</label>
                 <button @click="getPath('normal')">Normal</button>
-                <p>{{ info.normal }}</p>
+                <p>{{ info.normal.split("/").pop() }}</p>
             </div>
             <div>
                 <label>Bump</label>
                 <button @click="getPath('bump')">Bump</button>
-                <p>{{ info.bump }}</p>
+                <p>{{ info.bump.split("/").pop() }}</p>
             </div>
             <div>
                 <label>Displacement</label>
                 <button @click="getPath('displacement')">Displacement</button>
-                <p>{{ info.displacement }}</p>
+                <p>{{ info.displacement.split("/").pop() }}</p>
             </div>
         </div>
         <button @click="onSubmit()">Update</button>
@@ -80,6 +80,7 @@ export default {
     methods: {
         async getPath(mat_map) {
             const path = await window.alexandria.openFile()
+            if (path == "") { return }
             this.info[mat_map] = path
             if (mat_map == "thumbnail") {
                 await window.alexandria.deleteEntry(this.asset.thumbnail)

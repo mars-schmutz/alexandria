@@ -67,13 +67,13 @@ export default {
     },
     computed: {
         filtered: function() {
-            if (this.viewType != "all") {
+            if (this.viewType == "material") {
+                return this.assets.filter((asset) => {
+                    return (asset.type == "material" || asset.type == "proc_mat") && asset.name.toLowerCase().includes(this.search.toLowerCase())
+                }) 
+            } else if (this.viewType != "all") {
                 return this.assets.filter((asset) => {
                     return asset.type == this.viewType && asset.name.toLowerCase().includes(this.search.toLowerCase())
-                })
-            } else if (this.viewType == "material" || this.viewType == "proc_mat") {
-                return this.assets.filter((asset) => {
-                    return asset.type == "material" || asset.type == "proc_mat" && asset.name.toLowerCase().includes(this.search.toLowerCase())
                 })
             } else {
                 return this.assets.filter((asset) => {
@@ -95,6 +95,16 @@ export default {
     display: flex;
     margin-top: 1rem;
     padding: 1rem;
+}
+
+input[type="text"] {
+    width: 90%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    margin-left: 0.5rem;
+    background-color: var(--color-bg);
+    color: var(--color);
 }
 
 .shelf {

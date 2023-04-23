@@ -1,9 +1,8 @@
 <template>
     <div>
-        <h1>Details</h1>
+        <h3>Details</h3>
         <template v-if="asset">
-            <p>{{ asset.name }}</p>
-            <p>{{ asset.id }}</p>
+            <h4>{{ asset.name }}</h4>
             <button @click="editEntry()">Edit</button>
             <button @click="retrieveEntry()">View on disk</button>
         </template>

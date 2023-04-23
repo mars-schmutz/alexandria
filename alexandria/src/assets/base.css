@@ -18,7 +18,8 @@
     --color: var(--dark-grey);
     --color-border: var(--dark-grey);
     --color-highlight: var(--white-highlight);
-    --btn-color: var(--indigo);
+    /* --btn-color: var(--indigo); */
+    --btn-color: var(--blend-blue);
     /* --btn-border: var(--indigo); */
     --btn-bg: var(--blend-orange);
     --btn-border: var(--blend-orange);

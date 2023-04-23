@@ -1,50 +1,50 @@
 <template>
     <form @submit.prevent>
-        <div>
+        <div class="attr">
             <label>Name:</label>
-            <input type="text" v-model="name" />
+            <input type="text" v-model="name" placeholder="Name..."/>
         </div>
-        <div>
+        <div class="attr">
             <label>Thumbnail:</label>
-            <button @click="getPath('thumbnail')">Thumbnail</button>
-            <p>{{ asset_info.thumbnail }}</p>
+            <button @click="getPath('thumbnail')">Open</button>
+            <p>{{ asset_info.thumbnail.split("/").pop() }}</p>
         </div>
         <div>
             <h3>Texture Maps:</h3>
-            <div>
+            <div class="attr">
                 <label>Diffuse</label>
-                <button @click="getPath('diffuse')">Diffuse</button>
-                <p>{{ asset_info.diffuse }}</p>
+                <button @click="getPath('diffuse')">Open</button>
+                <p>{{ asset_info.diffuse.split("/").pop() }}</p>
             </div>
-            <div>
+            <div class="attr">
                 <label>Metallic</label>
-                <button @click="getPath('metallic')">Metallic</button>
-                <p>{{ asset_info.metallic }}</p>
+                <button @click="getPath('metallic')">Open</button>
+                <p>{{ asset_info.metallic.split("/").pop() }}</p>
             </div>
-            <div>
+            <div class="attr">
                 <label>Specular</label>
-                <button @click="getPath('specular')">Specular</button>
-                <p>{{ asset_info.specular }}</p>
+                <button @click="getPath('specular')">Open</button>
+                <p>{{ asset_info.specular.split("/").pop() }}</p>
             </div>
-            <div>
+            <div class="attr">
                 <label>Roughness</label>
-                <button @click="getPath('roughness')">Roughness</button>
-                <p>{{ asset_info.roughness }}</p>
+                <button @click="getPath('roughness')">Open</button>
+                <p>{{ asset_info.roughness.split("/").pop() }}</p>
             </div>
-            <div>
+            <div class="attr">
                 <label>Normal</label>
-                <button @click="getPath('normal')">Normal</button>
-                <p>{{ asset_info.normal }}</p>
+                <button @click="getPath('normal')">Open</button>
+                <p>{{ asset_info.normal.split("/").pop() }}</p>
             </div>
-            <div>
+            <div class="attr">
                 <label>Bump</label>
-                <button @click="getPath('bump')">Bump</button>
-                <p>{{ asset_info.metallic }}</p>
+                <button @click="getPath('bump')">Open</button>
+                <p>{{ asset_info.metallic.split("/").pop() }}</p>
             </div>
-            <div>
+            <div class="attr">
                 <label>Displacement</label>
-                <button @click="getPath('displacement')">Displacement</button>
-                <p>{{ asset_info.displacement }}</p>
+                <button @click="getPath('displacement')">Open</button>
+                <p>{{ asset_info.displacement.split("/").pop() }}</p>
             </div>
         </div>
         <button @click="onSubmit()">Save</button>

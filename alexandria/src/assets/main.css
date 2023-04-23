@@ -25,12 +25,23 @@ nav a:not(:first-child) {
     background-color: var(--btn-bg);
 }
 
+button {
+    padding: 0.25rem;
+    border-radius: 7%;
+    border: 0.15rem solid var(--btn-border);
+    margin: 0.25rem;
+    color: var(--btn-border);
+    background-color: var(--color-bg);
+}
+
+button:hover {
+    cursor: pointer;
+}
+
 input[type="text"] {
-    width: 90%;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
-    margin-left: 0.5rem;
     background-color: var(--color-bg);
     color: var(--color);
 }
@@ -45,4 +56,26 @@ select {
     color: var(--btn-bg);
     border-color: var(--btn-bg);
     background-color: var(--color-bg);
+}
+
+.add-type {
+    margin-left: 0.5rem;
+}
+
+.attr {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+
+.attr label {
+    margin-bottom: 0.5rem;
+}
+
+.attr p {
+    margin: 0;
 }

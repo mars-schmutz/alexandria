@@ -8,7 +8,7 @@
         <div>
             <label>Rig File:</label>
             <button @click="getPath()">Rig</button>
-            <p>{{ settings }}</p>
+            <p>{{ settings.split("/").pop() }}</p>
         </div>
         <button @click="onSubmit()">Update</button>
     </form>

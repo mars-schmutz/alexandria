@@ -1,12 +1,12 @@
 <template>
     <form @submit.prevent>
-        <div>
+        <div class="attr">
             <label>Name:</label>
-            <input type="text" v-model="name" />
+            <input type="text" v-model="name" placeholder="Name..."/>
         </div>
-        <div>
+        <div class="attr">
             <label>Compositor Settings:</label>
-            <button @click="getSettings()">File</button>
+            <button @click="getSettings()">Open</button>
             <p>{{ fname }}</p>
         </div>
         <button @click="onSubmit()">Save</button>

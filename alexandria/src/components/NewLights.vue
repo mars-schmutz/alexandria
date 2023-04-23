@@ -1,13 +1,13 @@
 <template>
     <form @submit.prevent>
-        <div>
+        <div class="attr">
             <label>Name:</label>
-            <input type="text" v-model="name" />
+            <input type="text" v-model="name" placeholder="Name..."/>
         </div>
-        <div>
+        <div class="attr">
             <label>Rig File:</label>
-            <button @click="getPath('settings')">Rig</button>
-            <p>{{ settings }}</p>
+            <button @click="getPath('settings')">Open</button>
+            <p>{{ fname }}</p>
         </div>
         <button @click="onSubmit()">Save</button>
     </form>
@@ -26,6 +26,15 @@ export default {
             id: "",
             assetLocation: "",
             thumbnail: "",
+        }
+    },
+    computed: {
+        fname: function() {
+            if (this.settings == "") {
+                return "No file selected"
+            } else {
+                return this.settings.split("/").pop()
+            }
         }
     },
     methods: {

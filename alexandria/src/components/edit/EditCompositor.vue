@@ -8,7 +8,7 @@
         <div>
             <label>Settings File:</label>
             <button @click="getPath()">Settings</button>
-            <p>{{ settings }}</p>
+            <p>{{ settings.split("/").pop() }}</p>
         </div>
         <button @click="onSubmit()">Update</button>
     </form>

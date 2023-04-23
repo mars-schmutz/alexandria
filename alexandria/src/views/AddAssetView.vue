@@ -5,7 +5,7 @@
     <template v-else>
         <h3>New Asset</h3>
         <label>Asset Type:</label>
-        <select v-model="assetType">
+        <select class="add-type" v-model="assetType">
             <option disabled>Select asset type</option>
             <option value="material">Material</option>
             <option value="render">Render Settings</option>
