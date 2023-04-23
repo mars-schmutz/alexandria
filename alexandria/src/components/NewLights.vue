@@ -3,6 +3,7 @@
         <div class="attr">
             <label>Name:</label>
             <input type="text" v-model="name" placeholder="Name..."/>
+            <p class="err" v-if="err">* Please add a name</p>
         </div>
         <div class="attr">
             <label>Rig File:</label>
@@ -26,6 +27,7 @@ export default {
             id: "",
             assetLocation: "",
             thumbnail: "",
+            err: false
         }
     },
     computed: {
@@ -38,6 +40,15 @@ export default {
         }
     },
     methods: {
+        nameEmpty() {
+            if (this.name == "") {
+                this.err = true
+                return true 
+            } else {
+                this.err = false
+                return false 
+            }
+        },
         async getPath(map) {
             let path = await window.alexandria.openFile()
             if (path == "") { return }
@@ -52,6 +63,7 @@ export default {
             this.settings = new_path
         },
         async onSubmit() {
+            if (this.nameEmpty()) { return }
             await this.fileEntry()
             let lights = {
                 id: this.id,

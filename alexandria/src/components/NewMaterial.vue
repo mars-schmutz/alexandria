@@ -3,6 +3,7 @@
         <div class="attr">
             <label>Name:</label>
             <input type="text" v-model="name" placeholder="Name..."/>
+            <p class="err" v-if="err">* Please add a name</p>
         </div>
         <div class="attr">
             <label>Thumbnail:</label>
@@ -48,6 +49,7 @@
             </div>
         </div>
         <button @click="onSubmit()">Save</button>
+        <p class="err" v-if="err">Please fix the errors</p>
     </form>
 </template>
 
@@ -72,9 +74,19 @@ export default {
                 bump: "",
                 displacement: "",
             },
+            err: false
         }
     },
     methods: {
+        nameEmpty() {
+            if (this.name == "") {
+                this.err = true
+                return true 
+            } else {
+                this.err = false
+                return false 
+            }
+        },
         async getPath(mat_map) {
             const path = await window.alexandria.openFile()
             if (path == "") { return }
@@ -96,6 +108,7 @@ export default {
             }
         },
         async onSubmit() {
+            if (this.nameEmpty()) { return }
             await this.fileEntry()
 
             let currLib = await window.store.get("library-shelves") ? await window.store.get("library-shelves") : []
