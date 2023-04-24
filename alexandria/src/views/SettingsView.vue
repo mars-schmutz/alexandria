@@ -7,6 +7,7 @@
     <button @click="prefPath()">Get My Settings</button>
     <p>{{ this.prefs }}</p>
     <div class="attributions">
+        <p>Credits for licensing requirements</p>
         <p>https://www.flaticon.com/free-icons/photography - Photography icons created by Freepik - Flaticon</p>
     </div>
 </template>
@@ -43,6 +44,10 @@ export default {
 <style scoped>
 input[type="text"] {
     width: 100%;
+}
+
+.attributions {
+    margin-top: 5rem;
 }
 
 #save-btn {
