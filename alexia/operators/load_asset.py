@@ -42,6 +42,7 @@ def load_material(ctx, id):
     for k in list(asset["maps"].keys()):
         if not asset["maps"][k]:
             del asset["maps"][k]
+    create_material(asset)
 
 def create_material(asset):
     material = bpy.data.materials.new(asset["name"])
