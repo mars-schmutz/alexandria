@@ -27,3 +27,10 @@ Alexia is the helper plugin to help bring your assets into your scene. Once it's
 Select an asset and click Load Asset. This will load the asset into your scene, whether it's a material, render settings, or a light rig. Assets based on information from Blender can be exported as a JSON file in File > Export > [Asset type]. After export you can add the JSON file to Alexandria to create a new asset based on those settings.
 
 ![Plugin Panel](https://i.imgur.com/SRUF0ZS.png)
+
+## Building & Installation Instructions
+### For Alexandria
+Use `npm install` to install the packages. Electron may need to be installed globally, see instructions [here](https://www.electronjs.org/docs/latest/tutorial/quick-start) for more. Use `npm run build:all` to build and launch the program. Use `npm run package` to build the executable located in the /alexandria/out directory.
+
+## For Alexia
+Make sure the directory /alexia is zipped. Install in Blender through Edit > Preferences > Add-Ons > Install. Navigate and select the zipped directory.
